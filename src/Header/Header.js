@@ -13,8 +13,8 @@ function Header() {
       </Row>
       <Row className="justify-content-center">
         <Col xs="auto">
-          <a href="https://github.com/blakemulnix">
-            <h5>github.com/blakemulnix</h5>
+          <a href="https://github.com/blakemulnix/game-of-life">
+            <h5>github.com/blakemulnix/game-of-life</h5>
           </a>
         </Col>
       </Row>
