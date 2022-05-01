@@ -61,13 +61,7 @@ function Controls(props) {
             <Button
               variant="outline-secondary"
               onClick={() =>
-                setMinMax(
-                  gameInterval,
-                  1,
-                  100,
-                  props.setDimension,
-                  setDimension
-                )
+                setMinMax(dimension, 1, 100, props.setDimension, setDimension)
               }
             >
               Set Dimensions
