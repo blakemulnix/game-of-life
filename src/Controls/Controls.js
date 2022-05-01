@@ -45,7 +45,6 @@ function Controls(props) {
               htmlSize="3"
               value={dimension}
               onChange={(e) => setDimension(e.target.value)}
-              type="number"
             />
           </InputGroup>
         </Col>
@@ -66,7 +65,6 @@ function Controls(props) {
               Set Interval (in ms)
             </Button>
             <FormControl
-              as="input"
               htmlSize="3"
               value={gameInterval}
               onChange={(e) => {
