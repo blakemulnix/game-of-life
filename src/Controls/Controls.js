@@ -14,7 +14,38 @@ function Controls(props) {
 
   return (
     <div className="controls-container">
-      <Row className="justify-content-center mb-">
+      <Row className="justify-content-center">
+        <Col className="mb-2" xs="auto">
+          <ButtonGroup aria-label="Basic example">
+            <Button
+              variant="secondary"
+              disabled={props.gamePlaying}
+              onClick={() => {
+                props.setGamePlaying(true);
+              }}
+            >
+              Play
+            </Button>
+            <Button
+              variant="secondary"
+              disabled={!props.gamePlaying}
+              onClick={() => {
+                props.setGamePlaying(false);
+              }}
+            >
+              Pause
+            </Button>
+            <Button
+              variant="secondary"
+              disabled={props.gamePlaying}
+              onClick={() => {
+                props.stepForward();
+              }}
+            >
+              Step Forward
+            </Button>
+          </ButtonGroup>
+        </Col>
         <Col className="mb-2" xs="auto">
           <Button
             variant="secondary"

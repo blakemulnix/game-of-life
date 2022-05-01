@@ -6,11 +6,13 @@ import { useState, useEffect } from "react";
 let initialDimension = 50;
 let initialGameInterval = 250;
 let initialDensity = 0.2;
+let initialGamePlaying = true;
 
 function Grid() {
   const [dimension, setDimension] = useState(initialDimension);
   const [gameInterval, setGameInterval] = useState(initialGameInterval);
   const [density, setDensity] = useState(initialDensity);
+  const [gamePlaying, setGamePlaying] = useState(initialGamePlaying);
   const [gridState, setGridState] = useState(() => {
     return createInitialGridState(initialDimension);
   });
@@ -28,10 +30,12 @@ function Grid() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setGridState(advanceGridState(gridState, dimension));
+      if (gamePlaying) {
+        setGridState(advanceGridState(gridState, dimension));
+      }
     }, gameInterval);
     return () => clearInterval(timer);
-  }, [gridState, dimension, gameInterval]);
+  }, [gridState, dimension, gameInterval, gamePlaying]);
 
   return (
     <div className="game-of-life-container">
@@ -43,6 +47,11 @@ function Grid() {
         gameInterval={gameInterval}
         density={density}
         setDensity={setDensity}
+        gamePlaying={gamePlaying}
+        setGamePlaying={setGamePlaying}
+        stepForward={() => {
+          setGridState(advanceGridState(gridState, dimension));
+        }}
       />
       <div className="grid-container">
         <div className="grid">{createCellsFromGridState(gridState)}</div>
