@@ -50,10 +50,20 @@ function Controls(props) {
           <Button
             variant="secondary"
             onClick={() => {
-              props.reset(dimension, density);
+              props.clearBoard(dimension, density);
             }}
           >
-            Reset
+            Clear
+          </Button>
+        </Col>
+        <Col className="mb-2" xs="auto">
+          <Button
+            variant="secondary"
+            onClick={() => {
+              props.randomizeBoard(dimension, density);
+            }}
+          >
+            Randomize
           </Button>
         </Col>
         <Col className="mb-2" xs="auto">

@@ -6,23 +6,36 @@ import { useState, useEffect } from "react";
 let initialDimension = 50;
 let initialGameInterval = 250;
 let initialDensity = 0.2;
-let initialGamePlaying = true;
+let initialGamePlaying = false;
+let initialGridState = createInitialGridState(initialDimension);
 
 function Grid() {
   const [dimension, setDimension] = useState(initialDimension);
   const [gameInterval, setGameInterval] = useState(initialGameInterval);
   const [density, setDensity] = useState(initialDensity);
   const [gamePlaying, setGamePlaying] = useState(initialGamePlaying);
-  const [gridState, setGridState] = useState(() => {
-    return createInitialGridState(initialDimension);
-  });
+  const [gridState, setGridState] = useState(initialGridState);
 
-  function resetGame(dimension, density) {
+  function clearBoard(dimension) {
+    setGridState(createInitialGridState(dimension, 0));
+  }
+
+  function randomizeBoard(dimension) {
     setGridState(createInitialGridState(dimension, density));
   }
 
+  function toggleCell(x, y) {
+    if (!gamePlaying) {
+      setGridState((prevGridState) => {
+        const newGridState = [...prevGridState];
+        newGridState[y][x] = !newGridState[y][x];
+        return newGridState;
+      });
+    }
+  }
+
   useEffect(() => {
-    resetGame(dimension, density);
+    randomizeBoard(dimension, density);
     let root = document.documentElement;
     root.style.setProperty("--num-cols", dimension);
     root.style.setProperty("--num-rows", dimension);
@@ -40,7 +53,8 @@ function Grid() {
   return (
     <div className="game-of-life-container">
       <Controls
-        reset={resetGame}
+        randomizeBoard={randomizeBoard}
+        clearBoard={clearBoard}
         setDimension={setDimension}
         dimension={dimension}
         setGameInterval={setGameInterval}
@@ -54,7 +68,9 @@ function Grid() {
         }}
       />
       <div className="grid-container">
-        <div className="grid">{createCellsFromGridState(gridState)}</div>
+        <div className="grid">
+          {createCellsFromGridState(gridState, toggleCell)}
+        </div>
       </div>
     </div>
   );
@@ -115,13 +131,24 @@ function isAlive(gridState, x, y, dimension) {
   return gridState[y][x] ? 1 : 0;
 }
 
-function createCellsFromGridState(gridState) {
+function createCellsFromGridState(gridState, toggleCell) {
   let cells = [];
   let key = 0;
+  let y = 0;
   gridState.forEach((row) => {
+    let x = 0;
     row.forEach((cellState) => {
-      cells.push(<Cell key={key++} alive={cellState} />);
+      cells.push(
+        <Cell
+          key={key++}
+          alive={cellState}
+          coords={{ x: x, y: y }}
+          toggleCell={toggleCell}
+        />
+      );
+      x++;
     });
+    y++;
   });
 
   return cells;
