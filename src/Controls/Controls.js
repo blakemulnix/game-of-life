@@ -14,7 +14,7 @@ function Controls(props) {
 
   return (
     <div className="controls-container">
-      <Row className="justify-content-center">
+      <Row className="justify-content-center p-2">
         <Col className="mb-2" xs="auto">
           <ButtonGroup aria-label="Basic example">
             <Button
@@ -69,7 +69,7 @@ function Controls(props) {
         <Col className="mb-2" xs="auto">
           <InputGroup>
             <Button
-              variant="outline-secondary"
+              variant="secondary"
               onClick={() =>
                 setMinMax(dimension, 1, 100, props.setDimension, setDimension)
               }
@@ -86,7 +86,7 @@ function Controls(props) {
         <Col className="mb-2" xs="auto">
           <InputGroup>
             <Button
-              variant="outline-secondary"
+              variant="secondary"
               onClick={() =>
                 setMinMax(
                   gameInterval,
@@ -111,7 +111,7 @@ function Controls(props) {
         <Col className="mb-2" xs="auto">
           <InputGroup>
             <Button
-              variant="outline-secondary"
+              variant="secondary"
               onClick={() =>
                 setMinMax(density, 0.01, 1, props.setDensity, setDensity)
               }
