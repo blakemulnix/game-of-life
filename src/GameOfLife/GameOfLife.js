@@ -16,6 +16,22 @@ function Grid() {
   const [gamePlaying, setGamePlaying] = useState(initialGamePlaying);
   const [gridState, setGridState] = useState(initialGridState);
 
+  useEffect(() => {
+    randomizeBoard(dimension, density);
+    let root = document.documentElement;
+    root.style.setProperty("--num-cols", dimension);
+    root.style.setProperty("--num-rows", dimension);
+  }, [dimension, density]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (gamePlaying) {
+        setGridState(advanceGridState(gridState, dimension));
+      }
+    }, gameInterval);
+    return () => clearInterval(timer);
+  }, [gridState, dimension, gameInterval, gamePlaying]);
+
   function clearBoard(dimension) {
     setGridState(createInitialGridState(dimension, 0));
   }
@@ -33,22 +49,6 @@ function Grid() {
       });
     }
   }
-
-  useEffect(() => {
-    randomizeBoard(dimension, density);
-    let root = document.documentElement;
-    root.style.setProperty("--num-cols", dimension);
-    root.style.setProperty("--num-rows", dimension);
-  }, [dimension, density]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (gamePlaying) {
-        setGridState(advanceGridState(gridState, dimension));
-      }
-    }, gameInterval);
-    return () => clearInterval(timer);
-  }, [gridState, dimension, gameInterval, gamePlaying]);
 
   return (
     <div className="game-of-life-container">
